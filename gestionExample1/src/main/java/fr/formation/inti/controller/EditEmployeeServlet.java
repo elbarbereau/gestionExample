@@ -24,6 +24,7 @@ import fr.formation.inti.service.IEmployeeService;
 @WebServlet("/edit")
 public class EditEmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private static final Log log = LogFactory.getLog(EditEmployeeServlet.class);
 
 	

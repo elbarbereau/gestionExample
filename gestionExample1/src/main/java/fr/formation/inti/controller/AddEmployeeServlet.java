@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import fr.formation.inti.controller.filter.FilterLog;
 import fr.formation.inti.entity.Employee;
 import fr.formation.inti.service.EmployeeService;
 import fr.formation.inti.service.IEmployeeService;
@@ -25,6 +24,7 @@ import fr.formation.inti.service.IEmployeeService;
 @WebServlet("/add")
 public class AddEmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private static final Log log = LogFactory.getLog(AddEmployeeServlet.class);
 
 	private IEmployeeService service;
