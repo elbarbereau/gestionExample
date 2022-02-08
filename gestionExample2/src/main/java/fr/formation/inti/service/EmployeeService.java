@@ -6,19 +6,23 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.formation.inti.dao.IEmployeeDao;
 import fr.formation.inti.entity.Employee;
 
 @Service
+@Transactional
 public class EmployeeService implements IEmployeeService{
 	
-	@SuppressWarnings("unused")
 	private static final Log log = LogFactory.getLog(EmployeeService.class);
 	
 	@Autowired
 	private IEmployeeDao dao;
 
+	public EmployeeService(){
+
+	}
 	@Override
 	public Integer save(Employee employee) {
 		return dao.save(employee);
@@ -44,5 +48,19 @@ public class EmployeeService implements IEmployeeService{
 		List<Employee> list = dao.findAll();
 		return list;
 	}
-
+	public static void main(String[] args) {
+		EmployeeService service = new EmployeeService();
+		List<Employee> list = service.findAll();
+		for(Employee e:list)
+			log.info(e);
+	}
+	public IEmployeeDao getDao() {
+		return dao;
+	}
+	public void setDao(IEmployeeDao dao) {
+		this.dao = dao;
+	}
+	
+	
+	
 }
