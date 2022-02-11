@@ -7,8 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Size;
 
-//Table base de donnée   T_User
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 public class User {
 	@Id
@@ -17,9 +19,13 @@ public class User {
 	private Integer userId;
 	
 	@Column(name = "LOGIN")
+	@NotBlank
+	@Size(min=3,max=5)
 	private String login;
 	
 	@Column(name = "PASSWORD")
+	@NotBlank
+	@Size(min=5,max=7)
 	private String password;
 	
 	@OneToOne
@@ -31,6 +37,11 @@ public class User {
 	
 	
 	public User() {
+	}
+	public User(String login, String password) {
+		super();
+		this.login = login;
+		this.password = password;
 	}
 	
 	public User(String login, String password, Integer connectionNumber) {

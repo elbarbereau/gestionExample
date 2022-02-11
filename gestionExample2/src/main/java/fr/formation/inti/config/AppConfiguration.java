@@ -1,26 +1,30 @@
 package fr.formation.inti.config;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 
 @Configuration
-@ComponentScan( basePackages = {"fr.formation.inti"})
-//@ComponentScan( basePackages = {"fr.formation.inti.dao","fr.formation.inti.service"})
+@ComponentScan( basePackages = {"fr.formation.inti.*"})
 @EnableTransactionManagement(proxyTargetClass = true)
 @PropertySource("classpath:ds-hibernate-cfg.properties")
 public class AppConfiguration{
@@ -70,6 +74,21 @@ public class AppConfiguration{
 		viewResolver.setPrefix("/WEB-INF/pages/");
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
+	}
+	
+	@Bean(name="messageSource")
+	public MessageSource getMessageSource() {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename("classpath:i18n/messages");
+		messageSource.setDefaultEncoding("UTF-8");
+		return messageSource;
+	}
+	
+	@Bean(name="localeResolver")
+	public LocaleResolver getLocaleResolver() {
+		SessionLocaleResolver resolver = new SessionLocaleResolver();		
+		resolver.setDefaultLocale(Locale.FRENCH);
+		return resolver;
 	}
 
 

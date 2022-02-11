@@ -1,14 +1,31 @@
 package fr.formation.inti.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import fr.formation.inti.dao.IUserDao;
-import fr.formation.inti.dao.UserDao;
 import fr.formation.inti.entity.User;
 
+
+@Service
+@Transactional
 public class UserService implements IUserService{
+	
+	@Autowired
 	private IUserDao dao ;
 	
 	public UserService() {
-		dao = new UserDao();
+		
+	}
+	
+	public IUserDao getDao() {
+		return dao;
+	}
+
+	public void setDao(IUserDao dao) {
+		this.dao = dao;
 	}
 
 	public User findByLoginAndPassword(String login, String password) {
@@ -21,10 +38,6 @@ public class UserService implements IUserService{
 		return id;
 	}
 	
-	public static void main(String[] args) {
-		IUserService service = new UserService();
-		
-		service.findByLoginAndPassword("root", "123456");
-	}
+
 
 }
